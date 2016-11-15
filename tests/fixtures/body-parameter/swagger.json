@@ -118,13 +118,19 @@
                 "operationId": "Test Body Parameter With Object Schema Type",
                 "parameters": [
                     {
-                        "name": "testObjectSchemaType",
+                        "name": "$body",
                         "in": "body",
-                        "required": true,
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "exampleProperty",
+                                "exampleProperty2"
+                            ],
                             "properties": {
                                 "exampleProperty": {
+                                    "type" : "string"
+                                },
+                                "exampleProperty2": {
                                     "type" : "string"
                                 }
                             }
