@@ -80,19 +80,19 @@ class TestResource extends Resource
     }
 
     /**
-     * @param object $testObjectSchemaType
+     * @param object testBodyParameter
      * @param array  $parameters           List of parameters
      * @param string $fetch                Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function testBodyParameterWithObjectSchemaType($testObjectSchemaType, $parameters = [], $fetch = self::FETCH_OBJECT)
+    public function testBodyParameterWithObjectSchemaType($testBodyParameter, $parameters = [], $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url        = '/test-object-schema-type-object';
         $url        = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers    = array_merge(['Host' => 'localhost'], $queryParam->buildHeaders($parameters));
-        $body       = $testObjectSchemaType;
+        $body       = $this->serializer->serialize($testBodyParameter, 'json');
         $request    = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise    = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {

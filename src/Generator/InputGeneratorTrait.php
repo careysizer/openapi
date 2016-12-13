@@ -4,6 +4,7 @@ namespace Joli\Jane\OpenApi\Generator;
 
 use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\OpenApi\Model\Schema;
 use Joli\Jane\Runtime\Reference;
 use Joli\Jane\OpenApi\Model\BodyParameter;
 use Joli\Jane\OpenApi\Model\FormDataParameterSubSchema;
@@ -224,7 +225,7 @@ trait InputGeneratorTrait
         }
 
         // $body = $parameter
-        if (!($bodyParameter->getSchema() instanceof Reference)) {
+        if (!($bodyParameter->getSchema() instanceof Reference) && !($bodyParameter->getSchema() instanceof Schema && $bodyParameter->getSchema()->getType() == 'object')) {
             return [[
                 new Expr\Assign($bodyVariable, new Expr\Variable(Inflector::camelize($bodyParameter->getName())))
             ], $bodyVariable];

@@ -17,6 +17,10 @@ class BodyParameter
      */
     protected $in;
     /**
+     * @var Operation
+     */
+    protected $operation;
+    /**
      * @var bool
      */
     protected $required;
@@ -121,6 +125,25 @@ class BodyParameter
     public function setSchema($schema = null)
     {
         $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * @return Operation
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
+    /**
+     * @param Operation $operation
+     * @return self
+     */
+    public function setOperation($operation)
+    {
+        $this->operation = $operation;
 
         return $this;
     }

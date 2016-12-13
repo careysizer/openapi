@@ -4,6 +4,7 @@ namespace Joli\Jane\OpenApi\Generator\Parameter;
 
 use Doctrine\Common\Inflector\Inflector;
 use Joli\Jane\Generator\Context\Context;
+use Joli\Jane\OpenApi\Operation\Operation;
 use Joli\Jane\Runtime\Reference;
 use Joli\Jane\Reference\Resolver;
 use Joli\Jane\OpenApi\Model\BodyParameter;
@@ -74,6 +75,10 @@ class BodyParameterGenerator extends ParameterGenerator
         $resolvedSchema = null;
         $array          = false;
         $schema         = $parameter->getSchema();
+
+        if ($schema instanceof Schema && $schema->getType() == 'object' && is_object($parameter->getOperation())) {
+            return [$parameter->getOperation()->getOperationId() . 'Body', null];
+        }
 
         if ($schema instanceof Reference) {
             $resolvedSchema = $this->resolver->resolve($schema);
